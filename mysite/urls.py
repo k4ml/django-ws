@@ -13,12 +13,15 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+import json
+
 from django.contrib import admin
 from django.urls import path
 
 from django.shortcuts import render
 
 from mysite.models import Update
+from mysite.ws.urls import websocket
 
 def index(request):
   updates = Update.objects.all()
@@ -27,7 +30,15 @@ def index(request):
   }
   return render(request, "mysite/index.html", context)
 
+async def websocket_view(socket):
+    await socket.accept()
+    while True:
+        message = await socket.receive_json()
+        print("Incoming", message)
+        message["message"] = "Received: " + message["message"]
+        await socket.send_json(message)
+
 urlpatterns = [
-    path('admin/', admin.site.urls),   
-    path("", index) 
+    path("", index),
+    websocket("ws/", websocket_view),
 ]

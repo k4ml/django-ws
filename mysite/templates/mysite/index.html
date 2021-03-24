@@ -1,5 +1,9 @@
 <h1>My Site</h1>
 
+<script>
+    var ws = new WebSocket('ws://localhost:8000/ws/');
+</script>
+
 <ul>
 {% for update in updates %}
 <li>{{ update.text}} - {{update.user.username}}</li>
