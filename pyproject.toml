@@ -1,8 +1,8 @@
 [tool.poetry]
-name = "django-template"
+name = "django-ws"
 version = "0.1.0"
-description = ""
-authors = ["Your Name <you@example.com>"]
+description = "Django project with websocket implementation"
+authors = ["Kamal Mustafa <k4ml@github.io>"]
 
 [tool.poetry.dependencies]
 python = "^3.7"
